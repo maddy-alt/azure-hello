@@ -1,9 +1,12 @@
-FROM nginx:latest
+FROM python:3
 
-EXPOSE 80
+EXPOSE 8080
 
-RUN apt-get update
-COPY src/index.html /usr/share/nginx/html
+RUN mkdir -p /usr/src/hello-world
+COPY src /usr/src/hello-world/src
 
+WORKDIR /usr/src/hello-world/src
 
+RUN pip install -r requirements.txt
 
+CMD python3 app.py
