@@ -1,6 +1,6 @@
 FROM python:3
 
-EXPOSE 8080
+EXPOSE 80
 
 RUN mkdir -p /usr/src/hello-world
 COPY src /usr/src/hello-world/src
