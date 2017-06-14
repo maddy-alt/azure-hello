@@ -6,10 +6,10 @@ import os, json
 @route('/')
 @view('index')
 def index():
-    database = os.environ.get('POSTGRES_DB')
-    user = os.environ.get('POSTGRES_USER')
-    password = os.environ.get('POSTGRES_PASSWORD')
-    host = os.environ.get('POSTGRES_HOST')
+    database = os.environ.get('POSTGRESQL_DB')
+    user = os.environ.get('POSTGRESQL_USER')
+    password = os.environ.get('POSTGRESQL_PASSWORD')
+    host = os.environ.get('POSTGRESQL_HOST')
     # port=os.environ.get('POSTGRES_PORT') | 5432
     db_version = ''
 
