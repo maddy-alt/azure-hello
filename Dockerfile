@@ -1,12 +1,26 @@
-FROM python:3
+FROM centos:7
 
-EXPOSE 80
+EXPOSE 8080
 
 RUN mkdir -p /usr/src/hello-world
 COPY src /usr/src/hello-world/src
 
 WORKDIR /usr/src/hello-world/src
 
-RUN pip install -r requirements.txt
+RUN yum -y install centos-release-scl && \
+    yum -y install --setopt=tsflags=nodocs rh-python35-python-pip && \
+    source scl_source enable rh-python35 && \
+    pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt && \
+    python -m pip uninstall -y pip setuptools && \
+    yum clean all
 
+# entrypoint to enable scl python at runtime
+RUN echo $'#!/bin/sh\n\
+source scl_source enable rh-python35\n\
+exec "$@"' > /usr/bin/entrypoint.sh && \
+    chmod +x /usr/bin/entrypoint.sh
+
+USER 99
+ENTRYPOINT [ "entrypoint.sh" ]
 CMD python3 app.py
