@@ -10,7 +10,7 @@ WORKDIR /usr/src/hello-world/src
 RUN yum -y install centos-release-scl && \
     yum -y install --setopt=tsflags=nodocs rh-python35-python-pip && \
     source scl_source enable rh-python35 && \
-    pip install --upgrade pip && \
+    pip install --no-cache-dir -U pip setuptools && \
     pip install --no-cache-dir -r requirements.txt && \
     python -m pip uninstall -y pip setuptools && \
     yum clean all
@@ -23,4 +23,4 @@ exec "$@"' > /usr/bin/entrypoint.sh && \
 
 USER 99
 ENTRYPOINT [ "entrypoint.sh" ]
-CMD python3 app.py
+CMD python app.py
