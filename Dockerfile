@@ -3,9 +3,8 @@ FROM centos:7
 EXPOSE 8080
 
 RUN mkdir -p /usr/src/hello-world
-COPY src /usr/src/hello-world/src
-
-WORKDIR /usr/src/hello-world/src
+COPY requirements.txt /usr/src/hello-world
+WORKDIR /usr/src/hello-world/
 
 RUN yum -y install centos-release-scl && \
     yum -y install --setopt=tsflags=nodocs rh-python35-python-pip && \
@@ -20,6 +19,9 @@ RUN echo $'#!/bin/sh\n\
 source scl_source enable rh-python35\n\
 exec "$@"' > /usr/bin/entrypoint.sh && \
     chmod +x /usr/bin/entrypoint.sh
+
+COPY src /usr/src/hello-world/src
+WORKDIR /usr/src/hello-world/src
 
 USER 99
 ENTRYPOINT [ "entrypoint.sh" ]
