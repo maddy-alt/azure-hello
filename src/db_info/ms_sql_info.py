@@ -5,10 +5,11 @@ import pymssql
 class MSSqlInfo(DbInfo):
     db_type_label = 'MSSql'
 
-    def __init__(self, host, port, admin_user, admin_password):
+    def __init__(self, host, port, database, admin_user, admin_password):
         super().__init__()
         self.host = host
         self.port = port or 1433
+        self.database = database
         self.user = admin_user
         self.password = admin_password
         self.connector = pymssql
